@@ -1,44 +1,52 @@
+// lib/screens/home_screen.dart
+
 import 'package:flutter/material.dart';
+import 'category_detail_screen.dart'; // Import the new file
 import '../utils/bottomnavigation.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreenPage extends StatefulWidget {
+  const HomeScreenPage({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenPageState createState() => _HomeScreenPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final Map<String, List<Map<String, String>>> foodCategories = {
-    'Breakfast': [
-      {'image': 'assets/images/Idli.jpeg', 'name': 'Idli'},
-      {'image': 'assets/images/Idli Sambhar.jpeg', 'name': 'Idli Sambhar'},
-      {'image': 'assets/images/Sambar Dosa.jpeg', 'name': 'Sambar Dosa'},
-      {'image': 'assets/images/Vada Puri.jpeg', 'name': 'Vada Puri'},
-      {'image': 'assets/images/Tea.jpeg', 'name': 'Tea'},
-      {'image': 'assets/images/Coffee.jpeg', 'name': 'Coffee'},
-    ],
-    'Snacks': [
-      {'image': 'assets/images/Samosa.jpeg', 'name': 'Samosa'},
-      {'image': 'assets/images/Puff.jpeg', 'name': 'Puff'},
-      {'image': 'assets/images/Spring Roll.jpeg', 'name': 'Spring Roll'},
-      {'image': 'assets/images/Manchuria.jpeg', 'name': 'Manchuria'},
-      {'image': 'assets/images/Gobi 65.jpeg', 'name': 'Gobi 65'},
-    ],
-    'Meals': [
-      {'image': 'assets/images/Chapati Meals.jpeg', 'name': 'Chapati Meals'},
-      {'image': 'assets/images/Fried Rice.jpeg', 'name': 'Fried Rice'},
-      {'image': 'assets/images/Veg Biriyani.jpeg', 'name': 'Veg Biriyani'},
-      {'image': 'assets/images/Paneer Fride Rice.jpeg', 'name': 'Paneer Fried Rice'},
-      {'image': 'assets/images/Zeera Rice.jpeg', 'name': 'Jeera Rice'},
-    ],
-    'Other Dishes': [
-      {'image': 'assets/images/Noodles.jpeg', 'name': 'Noodles'},
-      {'image': 'assets/images/Chilli Paneer.jpeg', 'name': 'Chilli Paneer'},
-      {'image': 'assets/images/Paneer Noodles Mix.jpeg', 'name': 'Paneer Noodles Mix'},
-      {'image': 'assets/images/Shezwan Noodles Mix.jpeg', 'name': 'Shezwan Noodles Mix'},
-      {'image': 'assets/images/Pasta.jpeg', 'name': 'Pasta'},
-    ],
+class _HomeScreenPageState extends State<HomeScreenPage> {
+   final Map<String, Map<String, Map<String, String>>> foodCategories = {
+    'Breakfast': {
+      'Idli': {'image': 'assets/images/Idli.jpeg', 'price': '25', 'name': 'Idli'},
+      'Sambar Idly': {'image': 'assets/images/Idli Sambhar.jpeg', 'price': '30', 'name': 'Sambar Idly'},
+      'Sambar Dosa': {'image': 'assets/images/Sambar Dosa.jpeg', 'price': '50', 'name': 'Sambar Dosa'},
+      'Wada Puri': {'image': 'assets/images/Vada Puri.jpeg', 'price': '25', 'name': 'Wada Puri'},
+      'Tea': {'image': 'assets/images/Tea.jpeg', 'price': '8', 'name': 'Tea'},
+      'Coffee': {'image': 'assets/images/Coffee.jpeg', 'price': '10', 'name': 'Coffee'},
+    },
+    'Snacks': {
+      'Samosa': {'image': 'assets/images/Samosa.jpeg', 'price': '10', 'name': 'Samosa'},
+      'Puff': {'image': 'assets/images/Puff.jpeg', 'price': '15', 'name': 'Puff'},
+      'Spring Roll': {'image': 'assets/images/Spring Roll.jpeg', 'price': '45', 'name': 'Spring Roll'},
+      'Manchuria': {'image': 'assets/images/Manchuria.jpeg', 'price': '50', 'name': 'Manchuria'},
+      'Gobi 65': {'image': 'assets/images/Gobi 65.jpeg', 'price': '70', 'name': 'Gobi 65'},
+    },
+    'Meals': {
+      'Chapathi Meals': {'image': 'assets/images/Chapati Meals.jpeg', 'price': '30', 'name': 'Chapathi Meals'},
+      'Fried Rice': {'image': 'assets/images/Fried Rice.jpeg', 'price': '35', 'name': 'Fried Rice'},
+      'Veg Biriyani': {'image': 'assets/images/Veg Biriyani.jpeg', 'price': '50', 'name': 'Veg Biriyani'},
+      'Paneer Fried Rice': {'image': 'assets/images/Paneer Fride Rice.jpeg', 'price': '60', 'name': 'Paneer Fried Rice'},
+      'Zeera Rice': {'image': 'assets/images/Zeera Rice.jpeg', 'price': '40', 'name': 'Zeera Rice'},
+    },
+    'Other Dishes': {
+      'Noodles': {'image': 'assets/images/Noodles.jpeg', 'price': '55', 'name': 'Noodles'},
+      'Chilli Paneer': {'image': 'assets/images/Chilli Paneer.jpeg', 'price': '50', 'name': 'Chilli Paneer'},
+      'Paneer Noodles Mix': {'image': 'assets/images/Paneer Noodles Mix.jpeg', 'price': '60', 'name': 'Paneer Noodles Mix'},
+      'Shezwan Noodles Mix': {'image': 'assets/images/Shezwan Noodles Mix.jpeg', 'price': '50', 'name': 'Shezwan Noodles Mix'},
+      'Pasha Mix': {'image': 'assets/images/Pasta.jpeg', 'price': '70', 'name': 'Pasha Mix'},
+    },
+    'Sweets': {
+      'G. Pulla Reddy Sweets': {'image': 'assets/images/Reddy Sweets.jpg', 'price': '70', 'name': 'G. Pulla Reddy Sweets'},
+      'Kaju Kathili': {'image': 'assets/images/Kaju Kathili.jpg', 'price': '70', 'name': 'Kaju Kathili'},
+      'Assorted Sweets': {'image': 'assets/images/Assorted Sweets.jpg', 'price': '70', 'name': 'Assorted Sweets'},
+    },
   };
 
   void _showProductDialog(BuildContext context, Map<String, String> item) {
@@ -117,6 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return Icons.lunch_dining;
       case 'Other Dishes':
         return Icons.dinner_dining;
+      case 'Sweets':  
+        return Icons.cake;
       default:
         return Icons.category;
     }
@@ -182,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-                    childAspectRatio: 1,
+                    childAspectRatio: 1.1,
                   ),
                   itemCount: foodCategories.keys.length,
                   itemBuilder: (context, index) {
@@ -194,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           MaterialPageRoute(
                             builder: (context) => CategoryDetailScreen(
                               category: category,
-                              items: foodCategories[category]!,
+                              items: foodCategories[category]!.values.toList(),
                               onItemTap: _showProductDialog,
                             ),
                           ),
@@ -203,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Card(
                         elevation: 5,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -232,68 +242,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         bottomNavigationBar: const BottomNavigation(),
-      ),
-    );
-  }
-}
-
-class CategoryDetailScreen extends StatelessWidget {
-  final String category;
-  final List<Map<String, String>> items;
-  final Function(BuildContext, Map<String, String>) onItemTap;
-
-  const CategoryDetailScreen({
-    Key? key,
-    required this.category,
-    required this.items,
-    required this.onItemTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text(
-          category,
-          style: const TextStyle(color: Colors.black),
-        ),
-      ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.8,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
-          return GestureDetector(
-            onTap: () => onItemTap(context, item),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    item['image']!,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  item['name']!,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

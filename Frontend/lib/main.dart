@@ -41,7 +41,7 @@ class MyHomePage extends StatelessWidget {
             // Navigate to HomeScreen
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreenPage()),
             );
           },
           child: const Text('Go to Home Screen'),
