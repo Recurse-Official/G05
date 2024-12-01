@@ -5,7 +5,7 @@ import '../screens/reorder.dart';
 import '../screens/settings.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key? key}) : super(key: key);
+  const BottomNavigation({Key? key, required int currentIndex, required Null Function(dynamic index) onTap}) : super(key: key);
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -43,12 +43,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
-          label: 'Cart',
-        ),
-        BottomNavigationBarItem(
           icon: Icon(IconData(0xe532, fontFamily: 'MaterialIcons')),
           label: 'Reorder',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart),
+          label: 'Cart',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
@@ -58,8 +58,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       currentIndex: _selectedIndex,
       selectedItemColor: Colors.green,
       unselectedItemColor: Colors.grey,
-      selectedLabelStyle: TextStyle(color: Colors.green),
-      unselectedLabelStyle: TextStyle(color: Colors.grey),
+      selectedLabelStyle: const TextStyle(color: Colors.green),
+      unselectedLabelStyle: const TextStyle(color: Colors.grey),
       showSelectedLabels: true,
       showUnselectedLabels: true,
       onTap: _onItemTapped,

@@ -16,7 +16,7 @@ class ReorderScreen extends StatelessWidget {
           style: TextStyle(fontSize: 24),
         ),
       ),
-      bottomNavigationBar: const BottomNavigation(),
+      bottomNavigationBar: BottomNavigation(currentIndex: 3, onTap: (index) {  },),
     );
   }
 }

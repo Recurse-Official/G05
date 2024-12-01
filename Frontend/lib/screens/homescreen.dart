@@ -192,71 +192,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         false;
   }
 
-  // void _showProductDialog(BuildContext context, Map<String, String> item) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       int quantity = 1;
-  //       return StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return AlertDialog(
-  //             title: Text(item['name']!),
-  //             content: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 Image.asset(
-  //                   item['image']!,
-  //                   height: 200,
-  //                   width: 200,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //                 const SizedBox(height: 10),
-  //                 Row(
-  //                   mainAxisAlignment: MainAxisAlignment.center,
-  //                   children: [
-  //                     IconButton(
-  //                       icon: const Icon(Icons.remove),
-  //                       onPressed: () {
-  //                         if (quantity > 1) {
-  //                           setState(() {
-  //                             quantity--;
-  //                           });
-  //                         }
-  //                       },
-  //                     ),
-  //                     Text('$quantity'),
-  //                     IconButton(
-  //                       icon: const Icon(Icons.add),
-  //                       onPressed: () {
-  //                         setState(() {
-  //                           quantity++;
-  //                         });
-  //                       },
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ],
-  //             ),
-  //             actions: [
-  //               TextButton(
-  //                 child: const Text('Add to Cart'),
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //               ),
-  //               TextButton(
-  //                 child: const Text('Close'),
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //               ),
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
   void _showProductDialog(BuildContext context, Map<String, String> item) {
   showDialog(
     context: context,
@@ -340,7 +275,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             backgroundColor: _isDarkMode ? Colors.black : Colors.orange,
             centerTitle: true,
             title: const Text(
-              'Welcome!',
+              'HomePage!',
               style: TextStyle(color: Colors.white),
             ),
             actions: [
@@ -427,7 +362,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
               ),
             ],
           ),
-          bottomNavigationBar: const BottomNavigation(),
+          bottomNavigationBar: BottomNavigation(currentIndex: 0, onTap: (index) {  },),
         ),
       ),
     );
