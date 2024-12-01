@@ -1,6 +1,11 @@
+import 'package:DigiCanteen/models/Crud.dart';
+import 'package:DigiCanteen/models/Product.dart';
 import 'package:flutter/material.dart';
+import 'cart.dart';
+import 'cart_indicator.dart';
+import 'dart:developer' as developer;
 
-class CategoryDetailScreen extends StatelessWidget {
+class CategoryDetailScreen extends StatefulWidget {
   final String category;
   final List<Map<String, String>> items;
   final Function(BuildContext, Map<String, String>) onItemTap;
@@ -13,19 +18,79 @@ class CategoryDetailScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _CategoryDetailScreenState createState() => _CategoryDetailScreenState();
+}
+
+class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
+  late Map<int, int> itemQuantities;
+  final CartService cartService = CartService();
+  final String rollNumber = "22BD1A050J"; // Replace with actual roll number
+
+  @override
+  void initState() {
+    super.initState();
+    itemQuantities = {for (int i = 0; i < widget.items.length; i++) i: 0};
+  }
+
+  void incrementQuantity(int index) async {
+    setState(() {
+      itemQuantities[index] = itemQuantities[index]! + 1;
+    });
+
+    final item = widget.items[index];
+    final product = Product(
+      ProductId: item['productId']!, // Assuming 'id' exists in item map
+      Name: item['name']!,
+      Price: double.parse(item['price']!),
+      Image: item['image']!,
+      quantity: itemQuantities[index]!,
+      rollNumber: rollNumber,
+    );
+
+    try {
+      await cartService.addToCart(rollNumber, product, itemQuantities[index]!);
+      developer.log('Item added to cart');
+    } catch (e) {
+      developer.log('Failed to add item to cart: $e');
+    }
+  }
+
+  void decrementQuantity(int index) async {
+    if (itemQuantities[index]! > 0) {
+      setState(() {
+        itemQuantities[index] = itemQuantities[index]! - 1;
+      });
+
+      final item = widget.items[index];
+      final productId = item['id']!; // Assuming  'id' exists in item map
+
+      try {
+        await cartService.deleteFromCart(rollNumber, productId);
+        developer.log('Item removed from cart');
+      } catch (e) {
+        developer.log('Failed to remove item from cart: $e');
+      }
+    }
+  }
+
+  int get totalItems => itemQuantities.values.fold(0, (previous, current) => previous + current);
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
-        title: Text(category),
+        title: Text(widget.category),
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: items.length,
+              itemCount: widget.items.length,
               itemBuilder: (context, index) {
-                Map<String, String> item = items[index];
+                Map<String, String> item = widget.items[index];
+                int quantity = itemQuantities[index]!;
+
                 return Card(
                   elevation: 5,
                   margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -74,29 +139,36 @@ class CategoryDetailScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Column(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.remove_circle_outline),
-                              onPressed: () {
-                                // Decrease item quantity logic
-                              },
-                            ),
-                            Text(
-                              '1', // This should reflect the current item quantity
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                        quantity == 0
+                            ? IconButton(
+                                icon: const Icon(Icons.add_circle_outline),
+                                onPressed: () {
+                                  incrementQuantity(index);
+                                },
+                              )
+                            : Row(
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.remove_circle_outline),
+                                    onPressed: () {
+                                      decrementQuantity(index);
+                                    },
+                                  ),
+                                  Text(
+                                    '$quantity',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.add_circle_outline),
+                                    onPressed: () {
+                                      incrementQuantity(index);
+                                    },
+                                  ),
+                                ],
                               ),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.add_circle_outline),
-                              onPressed: () {
-                                // Increase item quantity logic
-                              },
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
@@ -104,47 +176,19 @@ class CategoryDetailScreen extends StatelessWidget {
               },
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, -5),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '1 Item added',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+          CartIndicator(
+            itemCount: totalItems,
+            onViewCart: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CartScreen(
+                    itemQuantities: itemQuantities,
+                    items: widget.items,
                   ),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  ),
-                  onPressed: () {
-                    // View Cart logic
-                  },
-                  child: const Text(
-                    'View Cart',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),

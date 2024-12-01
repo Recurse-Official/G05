@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
  
   static final List<Widget> _screens = <Widget>[
     const HomeScreenPage(),
-    const CartScreen(),
+    const CartScreen(itemQuantities: {}, items: [],),
     const ReorderScreen(),
     const SettingsScreen(),
   ];
